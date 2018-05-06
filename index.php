@@ -3,18 +3,22 @@
 if ($_SERVER[REQUEST_URI] == '/') $page = 'home';
 else {
     $page = substr($_SERVER[REQUEST_URI], 1 );
-    if (!preg_match('/^[A-z0-9]{3,15}$/', $page)) exit('error url');
+    if (!preg_match('/^[A-z0-9]{3,15}$/', $page)) not_found();
 }
+
+$connect = mysqli_connect('localhost', 'root', '', 'project');
+if (!$connect) exit('Mysqli error!');
 
 session_start();
 
+
 if (file_exists('all/'.$page.'.php')) include 'all/'.$page.'.php';
 
-else if ($_SESSION['ulogin'] == 1 && file_exists('auth/'.$page.'.php')) include 'auth/'.$page.'.php';
+else if ($_SESSION['id'] && file_exists('auth/'.$page.'.php')) include 'auth/'.$page.'.php';
 
-else if ($_SESSION['ulogin'] != 1 && file_exists('guest/'.$page.'.php')) include 'guest/'.$page.'.php';
+else if (!$_SESSION['id'] && file_exists('guest/'.$page.'.php')) include 'guest/'.$page.'.php';
 
-else exit('Страница 404');
+else not_found();
 
 function message($text){
     exit ('{"message" : "'.$text.'"}');
@@ -22,6 +26,14 @@ function message($text){
 
 function go($url){
     exit ('{"go" : "'.$url.'"}');
+}
+
+function not_found(){
+    exit('Страница 404');
+}
+
+function random_str($num = 30){
+    return substr(str_shuffle('0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'), 0, $num);
 }
 
 function captcha_show(){
@@ -47,8 +59,19 @@ function captcha_valid(){
     );
 
     if ($_SESSION['captcha'] != array_search(strtolower($_POST['captcha']), $answers)){
-       message('Ответ на вопрос указан не верно!');
+       message('Ответ на вопрос указан неверно!');
     }
+}
+
+function email_valid(){
+    if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+    message('E-mail указан неверно!');
+}
+
+function password_valid(){
+    if (!preg_match('/^[A-z0-9]{6,30}$/', $_POST['password']))
+    message('Пароль указан неверно и может содержать 6 - 30 символов!');
+    $_POST['password'] = md5($_POST['password']);
 }
 
 function top($title) {
@@ -59,17 +82,27 @@ function top($title) {
             <title>'.$title. '</title>
             <link rel="stylesheet" href="/css/style.css">
             <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;                          subset=cyrillic" rel="stylesheet">
-            <script src="https://code.jquery.com/jquery-3.3.1.js"
-              integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            <script
+              src="http://code.jquery.com/jquery-1.12.4.js"
+              integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
               crossorigin="anonymous"></script>
             <script src="/js/script.js"></script>
         </head>
         <body>
             <div class="wrapper">
-                <div class="menu">
-                    <a href="/">Главная</a>
+                <div class="menu">';
+                
+                if ($_SESSION['id'])
+                    echo'
+                      <a href="/profile">Профайл</a>
+                    <a href="/history">История</a>
+                    ';
+                    else
+                        echo '
                     <a href="/login">Вход</a>
                     <a href="/register">Регистрация</a>
+                    ';
+                    echo'
                 </div>
                 <div class="content">
                     <div class="block">';
