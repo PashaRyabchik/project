@@ -96,6 +96,7 @@ function top($title) {
                     echo'
                       <a href="/profile">Профайл</a>
                     <a href="/history">История</a>
+                    <a href="/logout">Выход</a>
                     ';
                     else
                         echo '
