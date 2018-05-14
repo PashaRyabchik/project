@@ -21,7 +21,7 @@ p {
     margin: 10px;
 }
 
-input {
+input, textarea {
     font-family: 'Open Sans', sans-serif;
     padding: 3px;
     border: 1px solid #EEEFF2;
@@ -29,6 +29,10 @@ input {
     color: darkgray;
     width: 200px;
     outline: none;
+}
+
+textarea {
+    resize: none;
 }
 
 button {

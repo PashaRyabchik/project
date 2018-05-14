@@ -1,3 +1,3 @@
 # project
 # PHP 5.6
-#database: project.sql
+# database: project.sql

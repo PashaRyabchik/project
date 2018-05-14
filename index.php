@@ -82,15 +82,14 @@ function top($title) {
             <title>'.$title. '</title>
             <link rel="stylesheet" href="/css/style.css">
             <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;                          subset=cyrillic" rel="stylesheet">
-            <script
-              src="http://code.jquery.com/jquery-1.12.4.js"
-              integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-              crossorigin="anonymous"></script>
+            <script src="/js/jquery-1.12.4.min.js"></script>
             <script src="/js/script.js"></script>
         </head>
         <body>
             <div class="wrapper">
-                <div class="menu">';
+                <div class="menu">
+                    <a href="/contact">Обратная связь</a>
+                ';
                 
                 if ($_SESSION['id'])
                     echo'

@@ -1,4 +1,16 @@
 <?php
+
+    function go_auth($data)
+    {
+        foreach ($data as $key => $value) {
+            $_SESSION[$key] = $value;
+
+            go('profile');
+        }
+    }
+
+
+    //Form login
     if ($_POST['login_f']){
         email_valid();
         password_valid();
@@ -10,12 +22,34 @@
 
         $row = mysqli_fetch_assoc(mysqli_query($connect, "SELECT * FROM `users` WHERE `email` = '".$em."'"));
 
-        foreach ($row as $key => $value){
-            $_SESSION[$key] = $value;
+        if ($row['ip']){
+            $arr = explode(',', $row['ip']);
+
+            if (!in_array($SERVER['REMOVE_ADDR'], $arr)) {
+                    message("Доступ запрещен для этого IP!");
+            }
         }
-        go('profile');
+
+        if ($row['protected'] == 1){
+
+            $code = random_str(5);
+
+            $_SESSION['confirm'] = array(
+                'type' => 'login',
+                'data' => $row,
+                'code' => $code
+            );
+
+            mail($_POST['email'], 'Подтверждение входа',"Код подтверждения входа                   <b>$code</b>" );
+
+            go('confirm');
+        }
+    go_auth($row);
+
     }
 
+
+    //Form register
     else if ($_POST['register_f']){
         email_valid();
         password_valid();
@@ -40,6 +74,8 @@
 
     }
 
+
+    //Form recovery
     else if ($_POST['recovery_f']){
         email_valid();
         captcha_valid();
@@ -60,6 +96,8 @@
         go('confirm');
     }
 
+
+    //Form confirm
     else  if ($_POST['confirm_f']){
         if ($_SESSION['confirm']['type'] == 'register'){
             if ($_SESSION['confirm']['code'] != $_POST['code']) {
@@ -67,7 +105,7 @@
             }
             $email = $_SESSION['confirm']['email'];
             $password = $_SESSION['confirm']['password'];
-            mysqli_query($connect, "INSERT INTO `users` VALUES ('', '".$email."',                '".$password."')");
+            mysqli_query($connect, 'INSERT INTO `users` VALUES ("", "'.$email.'",                "'.$password.'","", 0)');
             unset($_SESSION['confirm']);
             go('login');
         }
@@ -82,6 +120,14 @@
             mysqli_query($connect, "UPDATE `users` SET `password` = '".md5($newpass)."' WHERE `email` = '".$_SESSION['confirm']['email']."' ");
             unset($_SESSION['confirm']);
             message("Ваш новый пароль: $newpass");
+        }
+
+        else if ($_SESSION['confirm']['type'] == 'login') {
+            if ($_SESSION['confirm']['code'] != $_POST['code'])
+                message('Код подтверждения указан не верно!');
+
+                go_auth($_SESSION['confirm']['data']);
+
         }
 
         else not_found();
