@@ -1,5 +1,11 @@
 <?php
 
+if (is_numeric($_GET['ref'])){
+    setcookie('ref', $_GET['ref'], strtotime('+1 week'));
+
+    header('location: /home');
+}
+
 if ($_SERVER[REQUEST_URI] == '/') $page = 'home';
 else {
     $page = substr($_SERVER[REQUEST_URI], 1 );
@@ -95,6 +101,8 @@ function top($title) {
                     echo'
                       <a href="/profile">Профайл</a>
                     <a href="/history">История</a>
+                    <a href="/referral">Рефералы</a>
+                    <a href="/reviews">Отзывы</a>                  
                     <a href="/logout">Выход</a>
                     ';
                     else

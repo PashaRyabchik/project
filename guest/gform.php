@@ -4,9 +4,8 @@
     {
         foreach ($data as $key => $value) {
             $_SESSION[$key] = $value;
-
-            go('profile');
         }
+        go('profile');
     }
 
 
@@ -103,9 +102,15 @@
             if ($_SESSION['confirm']['code'] != $_POST['code']) {
                 message('Код подтверждения регистрации указан не верно!');
             }
+
+            if (is_numeric($_COOKIE['ref']))
+                $ref = $_COOKIE['ref'];
+            else
+                $ref = 0;
+
             $email = $_SESSION['confirm']['email'];
             $password = $_SESSION['confirm']['password'];
-            mysqli_query($connect, 'INSERT INTO `users` VALUES ("", "'.$email.'",                "'.$password.'","", 0)');
+            mysqli_query($connect, 'INSERT INTO `users` VALUES ("", "'.$email.'",                "'.$password.'","", 0, '.$ref.')');
             unset($_SESSION['confirm']);
             go('login');
         }

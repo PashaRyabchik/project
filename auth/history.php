@@ -23,4 +23,5 @@
 
     <button onclick="load_history()">Загрузить</button>
     <div id="space"></div>
+
 <?php bottom() ?>

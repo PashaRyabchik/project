@@ -79,3 +79,17 @@ button:hover {
     color: #EEEFF2;
     padding: 15px;
 }
+
+.reviews {
+    background: #F1F6FC;
+    color: #000;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.reviews span{
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
