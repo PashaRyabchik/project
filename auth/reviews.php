@@ -8,12 +8,12 @@
 
 <?php
 
-$query = mysqli_query($connect, 'SELECT `text`, `userid` FROM `reviews` ORDER BY `id` DESC ');
+    $query = mysqli_query($connect, 'SELECT `text`, `userid` FROM `reviews` ORDER BY `id` DESC ');
 
-if (!mysqli_num_rows($query)) exit('Список отзывов пустой');
+    if (!mysqli_num_rows($query)) exit('Список отзывов пустой');
 
 
-while ($row = mysqli_fetch_assoc($query)){
+    while ($row = mysqli_fetch_assoc($query)){
 
     $user = mysqli_fetch_assoc(mysqli_query($connect, "SELECT `email` FROM `users` WHERE `id` = $row[userid]"));
 

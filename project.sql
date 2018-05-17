@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Час створення: Трв 16 2018 р., 20:14
+-- Час створення: Трв 17 2018 р., 20:08
 -- Версія сервера: 5.6.38
 -- Версія PHP: 5.6.32
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `history` (
   `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
   `text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -37,17 +38,10 @@ CREATE TABLE `history` (
 -- Дамп даних таблиці `history`
 --
 
-INSERT INTO `history` (`id`, `text`) VALUES
-(1, 'Запись 1'),
-(2, 'Запись 2'),
-(3, 'Запись 3'),
-(4, 'Запись 4'),
-(5, 'Запись 5'),
-(6, 'Запись 6'),
-(7, 'Запись 7'),
-(8, 'Запись 8'),
-(9, 'Запись 9'),
-(10, 'Запись 10');
+INSERT INTO `history` (`id`, `userid`, `text`) VALUES
+(11, 1, 'Покупка услуги №2'),
+(12, 1, 'Покупка услуги №1'),
+(13, 1, 'Покупка услуги №1');
 
 -- --------------------------------------------------------
 
@@ -81,16 +75,17 @@ CREATE TABLE `users` (
   `password` tinytext NOT NULL,
   `ip` text NOT NULL,
   `protected` int(11) NOT NULL,
-  `referral` int(11) NOT NULL
+  `referral` int(11) NOT NULL,
+  `balance` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп даних таблиці `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `ip`, `protected`, `referral`) VALUES
-(1, 'test@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 0),
-(2, 'test2@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 1);
+INSERT INTO `users` (`id`, `email`, `password`, `ip`, `protected`, `referral`, `balance`) VALUES
+(1, 'test@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 0, 20),
+(2, 'test2@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 1, 0);
 
 --
 -- Індекси збережених таблиць
@@ -122,13 +117,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблиці `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблиці `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблиці `users`

@@ -17,13 +17,9 @@ if (!$connect) exit('Mysqli error!');
 
 session_start();
 
-
 if (file_exists('all/'.$page.'.php')) include 'all/'.$page.'.php';
-
 else if ($_SESSION['id'] && file_exists('auth/'.$page.'.php')) include 'auth/'.$page.'.php';
-
 else if (!$_SESSION['id'] && file_exists('guest/'.$page.'.php')) include 'guest/'.$page.'.php';
-
 else not_found();
 
 function message($text){
@@ -80,6 +76,15 @@ function password_valid(){
     $_POST['password'] = md5($_POST['password']);
 }
 
+function services_price($id){
+    $arr = array(
+        1 => 10,
+        2 => 50,
+        3 => 100
+    );
+    return $arr[$id];
+}
+
 function top($title) {
     echo '<!DOCTYPE html>
         <html>
@@ -102,7 +107,8 @@ function top($title) {
                       <a href="/profile">Профайл</a>
                     <a href="/history">История</a>
                     <a href="/referral">Рефералы</a>
-                    <a href="/reviews">Отзывы</a>                  
+                    <a href="/reviews">Отзывы</a> 
+                    <a href="/services">Услуги</a>                   
                     <a href="/logout">Выход</a>
                     ';
                     else

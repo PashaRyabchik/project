@@ -11,12 +11,14 @@
 
     //Form login
     if ($_POST['login_f']){
+
         email_valid();
         password_valid();
         captcha_valid();
 
         $em = $_POST['email'];
         $pas = $_POST['password'];
+
         if (!mysqli_num_rows(mysqli_query($connect, "SELECT `id` FROM `users` WHERE `email` = '".$em."' && `password` = '".$pas."'")) ) message('Аккаунт не найден!');
 
         $row = mysqli_fetch_assoc(mysqli_query($connect, "SELECT * FROM `users` WHERE `email` = '".$em."'"));
@@ -50,11 +52,13 @@
 
     //Form register
     else if ($_POST['register_f']){
+
         email_valid();
         password_valid();
         captcha_valid();
 
         $emai = $_POST['email'];
+
         if (mysqli_num_rows(mysqli_query($connect, "SELECT `id` FROM `users` WHERE `email` = '".$emai."'")) ) message('Этот E-mail занят!');
 
         $passw = $_POST['password'];
@@ -76,10 +80,12 @@
 
     //Form recovery
     else if ($_POST['recovery_f']){
+
         email_valid();
         captcha_valid();
 
         $ema = $_POST['email'];
+
         if (!mysqli_num_rows(mysqli_query($connect, "SELECT `id` FROM `users` WHERE `email` = '".$ema."'")) ) message('Аккаунт не найден!');
 
         $code = random_str(5);
@@ -110,7 +116,8 @@
 
             $email = $_SESSION['confirm']['email'];
             $password = $_SESSION['confirm']['password'];
-            mysqli_query($connect, 'INSERT INTO `users` VALUES ("", "'.$email.'",                "'.$password.'","", 0, '.$ref.')');
+
+            mysqli_query($connect, 'INSERT INTO `users` VALUES ("", "'.$email.'",                "'.$password.'","", 0, '.$ref.', 0)');
             unset($_SESSION['confirm']);
             go('login');
         }

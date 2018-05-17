@@ -1,6 +1,6 @@
 <?php
 
-    $query = mysqli_query($connect, 'SELECT `text` FROM `history` LIMIT '.$_SESSION['loader'].', 2');
+    $query = mysqli_query($connect, 'SELECT `text` FROM `history` WHERE `userid` = '.$_SESSION['id'].' LIMIT '.$_SESSION['loader'].', 2');
 
     if (!mysqli_num_rows($query)){
         if ($_SESSION['loader'] == 0) exit('empty');

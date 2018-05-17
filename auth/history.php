@@ -2,6 +2,7 @@
 
     top('История');
     $_SESSION['loader'] = 0;
+
 ?>
 
     <script>
@@ -11,7 +12,7 @@
                 if (data == 'empty')
                     $('#space').text('История пуста');
                 else if (data != 'end')
-                     $('#space').append(data);
+                    $('#space').append(data);
 
             });
         }
