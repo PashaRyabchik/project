@@ -9,9 +9,9 @@
             <td>Услуга 3</td>
         </tr>
         <tr>
-            <td>Стоимость: <?=services_price(1)?> $</td>
-            <td>Стоимость: <?=services_price(2)?> $</td>
-            <td>Стоимость: <?=services_price(3)?> $</td>
+            <td>Стоимость: <?=calc_promo(1)?> $</td>
+            <td>Стоимость: <?=calc_promo(2)?> $</td>
+            <td>Стоимость: <?=calc_promo(3)?> $</td>
         </tr>
         <tr>
             <td>
@@ -27,5 +27,9 @@
             </td>
         </tr>
     </table>
+
+    <h1>Получить скидку</h1>
+    <p><input type="text" placeholder="Промокод" id="code"></p>
+    <p><button onclick="post_query('buy', 'promo', 'code')">Отправить</button></p>
 
 <?php bottom() ?>
