@@ -65,9 +65,39 @@ function captcha_valid(){
     }
 }
 
+//blocking the page
+function work(){
+    if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
+        exit('Ведутся технические работы');
+}
+
 function email_valid(){
     if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
     message('E-mail указан неверно!');
+}
+
+function bbcode($text){
+    $search = array(
+        '[b]',
+        '[/b]',
+        '[i]',
+        '[/i]',
+        '[url=',
+        '=name=',
+        '[/url]',
+    );
+
+    $replace = array(
+        '<b>',
+        '</b>',
+        '<i>',
+        '</i>',
+        '<a target="_blank" href="',
+        '">',
+        '</a>',
+    );
+
+    return str_replace($search, $replace, $text);
 }
 
 function password_valid(){
@@ -99,6 +129,25 @@ function services_price($id){
         3 => 100
     );
     return $arr[$id];
+}
+
+function send_mail($email, $title, $text){
+    mail($email, $title, '<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>'.$title.'</title>
+</head>
+
+<body style="margin: 0">
+    <div style="padding: 0; font-size: 18px; font-family: Arial, sans-serif; font-weight: bold; text-align: center; background: #FCFCFD">
+        <div style="margin: 0; background: #464E78; padding: 25px; color: white">'.$title.'</div>
+        <div style="padding: 30px">
+            <div style="background: white; border-radius: 10px; padding: 25px; border: 1px solid #EEEFF2">'.$text.'</div>
+        </div>
+    </div>
+</body>
+</html>', "From: admin@mysite.com\r\nMINE-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8");
 }
 
 function top($title) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Час створення: Трв 17 2018 р., 20:08
+-- Час створення: Трв 23 2018 р., 21:05
 -- Версія сервера: 5.6.38
 -- Версія PHP: 5.6.32
 
@@ -41,7 +41,9 @@ CREATE TABLE `history` (
 INSERT INTO `history` (`id`, `userid`, `text`) VALUES
 (11, 1, 'Покупка услуги №2'),
 (12, 1, 'Покупка услуги №1'),
-(13, 1, 'Покупка услуги №1');
+(13, 1, 'Покупка услуги №1'),
+(14, 1, 'Покупка услуги №1'),
+(15, 1, 'Покупка услуги №1');
 
 -- --------------------------------------------------------
 
@@ -84,8 +86,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `ip`, `protected`, `referral`, `balance`) VALUES
-(1, 'test@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 0, 20),
-(2, 'test2@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 1, 0);
+(1, 'test@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 0, 65),
+(2, 'test2@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 1, 0),
+(3, 'test3@i.ua', 'e10adc3949ba59abbe56e057f20f883e', '', 0, 1, 0);
 
 --
 -- Індекси збережених таблиць
@@ -117,19 +120,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблиці `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблиці `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблиці `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

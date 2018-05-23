@@ -21,3 +21,18 @@ function post_query(url, name, data) {
 function go(url) {
     window.location.href='/' + url;
 }
+
+function bbc(name) {
+    if (name == 'url'){
+        url = prompt('Введите URL', '');
+        if (url){
+            name = prompt('Введите название ссылки', '');
+            if (name){
+                data = '[url=' + url + '=name=' + name + '[/url]';
+            }
+        }
+    }
+    if (data){
+        $('#message').append(data);
+    }
+}

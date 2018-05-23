@@ -2,7 +2,7 @@
 
     <h1>Отзывы</h1>
     <p><textarea id="message" placeholder="Текст сообщения" rows="10"></textarea></p>
-    <p><button onclick="post_query('add', 'reviews', 'message')">Добавить</button>
+    <p><button onclick="post_query('add', 'reviews', 'message')">Добавить</button><button onclick="bbc('url')">Добавить ссылку</button></p>
 
     <h1>Список отзывов</h1>
 
@@ -17,7 +17,7 @@
 
     $user = mysqli_fetch_assoc(mysqli_query($connect, "SELECT `email` FROM `users` WHERE `id` = $row[userid]"));
 
-    echo '<div class="reviews"><span>Отправитель: '.$user['email'].'</span>'.nl2br(htmlspecialchars($row['text']), false).'</div>';
+    echo '<div class="reviews"><span>Отправитель: '.$user['email'].'</span>'.bbcode(nl2br(htmlspecialchars($row['text'])), false).'</div>';
 }
 
 bottom() ?>
